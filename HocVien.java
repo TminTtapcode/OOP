@@ -2,6 +2,7 @@ package com.lab.bai7;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.DoubleStream;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -60,21 +61,21 @@ public class HocVien {
     /**
      * @return the Diem
      */
-    public Double[] getDiem() {
+    public double[] getDiem() {
         return Diem;
     }
 
     /**
      * @param Diem the Diem to set
      */
-    public void setDiem(Double[] Diem) {
+    public void setDiem(double[] Diem) {
         this.Diem = Diem;
     }
     private static int dem;
     private int Id=++dem;
     private String hoTen;
     private LocalDate ngaySinh;
-    private Double[] Diem;
+    private double[] Diem;
 
     public HocVien(String hoTen, LocalDate ngaySinh) {
         this.hoTen = hoTen;
@@ -85,6 +86,36 @@ public class HocVien {
     }
     public void hienThi(){
         System.out.printf("%d - %s - %s\n",this.Id,this.hoTen,this.ngaySinh.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    }
+    public void nhap1Hv(){
+        System.out.print("Ho ten = ");
+        this.hoTen=CauHinh.SC.nextLine();
+        System.out.print("Ngay Sinh (dd/MM/yyyy) = ");
+        this.ngaySinh=LocalDate.parse(CauHinh.SC.nextLine(),CauHinh.FORMATTER);
+    }
+    public HocVien(){
+    }
+    public double tinhTb(){
+        if(this.Diem!=null)
+            return DoubleStream.of(this.Diem).average().getAsDouble();
+        return 0;
+    }
+    public void nhapDiem(){
+        System.out.printf("Nhap diem cuar %s\n",this.hoTen.toUpperCase());
+        this.Diem = new double[CauHinh.SO_MON];
+        for(int i=0;i<3;i++){
+            System.out.printf("Mon thu &d = ",i+1);
+            this.Diem[i]= Double.parseDouble(CauHinh.SC.nextLine());
+        }
+        System.out.println(this.tinhTb());
+    }
+    public boolean isHb(){
+        if(this.Diem !=null)
+            for(var d:this.Diem)
+                if(d<5)
+                    return false;
+        return this.tinhTb() >=8;
+        retur 
     }
    
 }

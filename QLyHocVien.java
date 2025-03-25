@@ -4,9 +4,13 @@
  */
 package com.lab.bai7;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,24 +42,28 @@ public class QLyHocVien {
     }
     public void themHv(){
         //Nhap...
+        HocVien h = new HocVien();
+        h.nhap1Hv();
+        this.Ds.add(h);
     }
-//    public void themHv(String duongDan){
-//        
-//        File o= new File("output.txt");
-//        String input;
-//        Scanner sc=new Scanner(f);
-//        try(PrintWriter writer=new PrintWriter(o)){
-//            while(sc.hasNextLine()){
-//                input=sc.nextLine();
-//                    input=input.replaceFirst("\\{file}", "Tap tin");
-//                writer.println(input);
-//            }
-//            
-//        }
-//
-//        
-//    }
+    public void themHv(String duongDan) throws FileNotFoundException{
+        File f =new File(duongDan);
+        try(Scanner sc = new Scanner(f)){
+            while (sc.hasNext()){
+                this.Ds.add(new HocVien(sc.nextLine(),sc.nextLine()));
+            }
+        }
+    }
     public void hienThi(){
         this.Ds.forEach(p->p.hienThi());
+    }
+    void nhapDiem(){
+        this.Ds.forEach(p->p.nhapDiem());
+    }
+    public HocVien timKiem(int id){
+        return this.Ds.stream().filter(h->h.getClass()==id).findFirst().get();
+    }
+    public List<HocVien> timKiem(String kw){
+        return this.Ds.stream().filter(h->h.getHoTen().contains(kw)).collect(Collectors.toList());
     }
 }
